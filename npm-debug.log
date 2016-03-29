@@ -1,0 +1,103 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'publish' ]
+2 info using npm@2.14.12
+3 info using node@v4.3.2
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: 'D:\\workspace\\smart-string',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory C:\Users\admin\AppData\Roaming\npm-cache\workspace\0.0.1\package.tgz not in flight; packing
+9 verbose tar pack [ 'C:\\Users\\admin\\AppData\\Roaming\\npm-cache\\workspace\\0.0.1\\package.tgz',
+9 verbose tar pack   'D:\\workspace\\smart-string' ]
+10 verbose tarball C:\Users\admin\AppData\Roaming\npm-cache\workspace\0.0.1\package.tgz
+11 verbose folder D:\workspace\smart-string
+12 info prepublish workspace@0.0.1
+13 verbose addLocalTarball adding from inside cache C:\Users\admin\AppData\Roaming\npm-cache\workspace\0.0.1\package.tgz
+14 silly cache afterAdd workspace@0.0.1
+15 verbose afterAdd C:\Users\admin\AppData\Roaming\npm-cache\workspace\0.0.1\package\package.json not in flight; writing
+16 verbose afterAdd C:\Users\admin\AppData\Roaming\npm-cache\workspace\0.0.1\package\package.json written
+17 silly publish { name: 'workspace',
+17 silly publish   version: '0.0.1',
+17 silly publish   description: 'String directory',
+17 silly publish   main: 'index.js',
+17 silly publish   directories: { test: 'test' },
+17 silly publish   scripts: { test: 'echo "Error: no test specified" && exit 1' },
+17 silly publish   author: { name: 'Gor Matevosyan' },
+17 silly publish   license: 'ISC',
+17 silly publish   keywords:
+17 silly publish    [ 'string',
+17 silly publish      'smart',
+17 silly publish      'substitute',
+17 silly publish      'compare',
+17 silly publish      'relevance',
+17 silly publish      'search',
+17 silly publish      'full-text',
+17 silly publish      'full-text search' ],
+17 silly publish   repository:
+17 silly publish    { type: 'git',
+17 silly publish      url: 'git+https://github.com/gormat/smart-string.git' },
+17 silly publish   bugs: { url: 'https://github.com/gormat/smart-string/issues' },
+17 silly publish   homepage: 'https://github.com/gormat/smart-string#readme',
+17 silly publish   readme: '# Smart - String\r\n\r\nInstall with [npm](https://www.npmjs.com/package/smart-string)\r\n```sh\r\n$ npm install smart-string\r\n```\r\n\r\nOr download from [github](https://github.com/gormat/smart-string)\r\n\r\n## Usage\r\n\r\n### Create Instance\r\n```smart-string``` is using Factory design pattern, so you cant use new method.\r\nFor creating new instance use ```SS( str )``` function.\r\n```sh\r\nvar SS = require(\'smart-string\');\r\nvar myString = SS( "This is my first string" );\r\n```\r\n\r\nFor creating empty string just call function without parameters\r\n```sh\r\nvar emptyString = SS();\r\n```\r\nThis return Object of type SmartString\r\n\r\nFor Getting value use ```value``` method\r\n```sh\r\nvar v = myString.value();\r\n```\r\n\r\n### Substitite\r\n\r\nSS can substitute string. ```substitute``` method takes options and replaces all substitutable\r\nparameters in string. For making substitutable word use ```{{``` and ```}}``` symbols.\r\n\r\nFor example\r\n```sh\r\nvar myString = SS( "My name is {{name}}, I love {{thing}}" );\r\nvar options = {\r\n    name: "John",\r\n    thing: "Node.JS"\r\n};\r\nvar x = mystring.value();\r\n// x is "My name is {{name}}, I love {{thing}}"\r\n\r\nmyString.substitute( options );\r\n// now value method will return new string.\r\nx = mystring.value();\r\n// x now is "My name is John, I love Node.JS"\r\n```\r\n\r\nNOTE: if some data cant be found in options object, method will just erase scopes.\r\n\r\nThere is also a method that substitute string, but does not change value, just return new string\r\n```sh\r\nvar myString = SS( "My name is {{name}}, I love {{thing}}" );\r\nvar options = {\r\n    name: "John",\r\n    thing: "Node.JS"\r\n};\r\nvar x = mystring.value();\r\n// x is "My name is {{name}}, I love {{thing}}"\r\n\r\nvar y = myString.returnSubstitute( options );\r\n// y is "My name is John, I love Node.JS"\r\n// but value of string is not changed.\r\nx = mystring.value();\r\n// x is still "My name is {{name}}, I love {{thing}}"\r\n```\r\n\r\n### Compare\r\n\r\nThree are few method for comparing.\r\n\r\n#### equalToString\r\n\r\nThis method takes argument string or SmartString and return true only if strings are exactly the same.\r\n```sh\r\nvar x = SS("First String");\r\nx.equalToString("First String") // return true\r\nx.equalToString(" First String") // return false\r\nx.equalToString( SS( "First String") ) // return true\r\nx.equalToString( SS(" First String" )) // return false\r\n```\r\n#### relevance\r\n\r\nTakes argument of type SmartString and returns integer in range 0-1 and shows how relevant are strings.\r\n```sh\r\nvar x = SS("Hi John Smith");\r\nvar y = SS("Hi Smith john");\r\nx.relevance( y ); // returns 1\r\nvar z = SS("Hello John Smith");\r\nx.relevance( y ); // returns 0.666 ...\r\nvar k = SS("Hello Jack Smith");\r\nx.relevance( y ); // returns 0.333 ...\r\n```\r\n\r\n#### search\r\n\r\nthis method is full text search. takes argument of type SmartString and returns integer in range 0-1. And shows\r\nhow is string relevant to our parameter.\r\n```sh\r\nvar x = SS("Hi John Smith. My Name is Gor. Nice to meet you");\r\nvar y = SS("Hi John Smith");\r\nconsole.log( x.search( y ));\r\n//returns 1 because x contains on y\r\nconsole.log( y.search( x ));\r\n// returns 0.2727272727272727 because only part of y contains on x\r\n\r\ny = SS("Hi John smith");\r\nconsole.log( y.search( x ));\r\n//returns 1. For search "Smith" and "smith" are same\r\n\r\ny = SS("Hi smith John");\r\nconsole.log( y.search( x ));\r\n//returns 1. For search "John Smith" and "smith John" are same\r\n\r\nvar k = SS("Hi Jack Smith");\r\nconsole.log( x.search( k ));\r\n//returns 0.6666666666666666. Only two word from k contains on y\r\n```\r\n\r\nIf you want to get all terms on string, just use ```terms``` method. It will return all terms in lowercase.\r\n```sh\r\nvar x = SS("Hi John Smith. My Name is Gor. Nice to meet you");\r\nconsole.log( x.terms() );\r\n// returns [ \'hi\', \'john\', \'smith\', \'my\', \'name\', \'is\', \'gor\', \'nice\', \'to\', \'meet\', \'you\' ]\r\n```\r\n\r\n',
+17 silly publish   readmeFilename: 'README.md',
+17 silly publish   _id: 'workspace@0.0.1',
+17 silly publish   _shasum: '1d05e526b0aa79cc9915d61be30966da54f3457e',
+17 silly publish   _from: '.' }
+18 verbose getPublishConfig undefined
+19 silly mapToRegistry name workspace
+20 silly mapToRegistry using default registry
+21 silly mapToRegistry registry https://registry.npmjs.org/
+22 silly mapToRegistry uri https://registry.npmjs.org/workspace
+23 verbose publish registryBase https://registry.npmjs.org/
+24 silly publish uploading C:\Users\admin\AppData\Roaming\npm-cache\workspace\0.0.1\package.tgz
+25 verbose request uri https://registry.npmjs.org/workspace
+26 verbose request sending authorization for write operation
+27 info attempt registry request try #1 at 7:56:41 PM
+28 verbose request using bearer token for auth
+29 verbose request id c05a07f3b284bd6b
+30 http request PUT https://registry.npmjs.org/workspace
+31 http 403 https://registry.npmjs.org/workspace
+32 verbose headers { 'content-type': 'application/json',
+32 verbose headers   'cache-control': 'max-age=300',
+32 verbose headers   'content-length': '101',
+32 verbose headers   'accept-ranges': 'bytes',
+32 verbose headers   date: 'Tue, 29 Mar 2016 15:56:42 GMT',
+32 verbose headers   via: '1.1 varnish',
+32 verbose headers   connection: 'keep-alive',
+32 verbose headers   'x-served-by': 'cache-fra1227-FRA',
+32 verbose headers   'x-cache': 'MISS',
+32 verbose headers   'x-cache-hits': '0',
+32 verbose headers   'x-timer': 'S1459267001.960951,VS0,VE602' }
+33 verbose request invalidating C:\Users\admin\AppData\Roaming\npm-cache\registry.npmjs.org\workspace on PUT
+34 error publish Failed PUT 403
+35 verbose stack Error: You do not have permission to publish 'workspace'. Are you logged in as the correct user? : workspace
+35 verbose stack     at makeError (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:264:12)
+35 verbose stack     at CachingRegistryClient.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:252:14)
+35 verbose stack     at Request._callback (C:\Program Files\nodejs\node_modules\npm\node_modules\npm-registry-client\lib\request.js:172:14)
+35 verbose stack     at Request.self.callback (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:198:22)
+35 verbose stack     at emitTwo (events.js:87:13)
+35 verbose stack     at Request.emit (events.js:172:7)
+35 verbose stack     at Request.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1082:10)
+35 verbose stack     at emitOne (events.js:82:20)
+35 verbose stack     at Request.emit (events.js:169:7)
+35 verbose stack     at IncomingMessage.<anonymous> (C:\Program Files\nodejs\node_modules\npm\node_modules\request\request.js:1009:12)
+36 verbose statusCode 403
+37 verbose pkgid workspace
+38 verbose cwd D:\workspace\smart-string
+39 error Windows_NT 10.0.10586
+40 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "publish"
+41 error node v4.3.2
+42 error npm  v2.14.12
+43 error code E403
+44 error You do not have permission to publish 'workspace'. Are you logged in as the correct user? : workspace
+45 error If you need help, you may report this error at:
+45 error     <https://github.com/npm/npm/issues>
+46 verbose exit [ 1, true ]

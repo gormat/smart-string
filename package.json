@@ -1,0 +1,32 @@
+{
+  "name": "workspace",
+  "version": "0.0.1",
+  "description": "String directory",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gor Matevosyan",
+  "license": "ISC",
+  "keywords": [
+    "string",
+    "smart",
+    "substitute",
+    "compare",
+    "relevance",
+    "search",
+    "full-text",
+    "full-text search"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gormat/smart-string.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gormat/smart-string/issues"
+  },
+  "homepage": "https://github.com/gormat/smart-string#readme"
+}
